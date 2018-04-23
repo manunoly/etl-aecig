@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>consumo</name>
+    <name>filtrarMedidoresUnicos</name>
     <description />
     <extended_description />
     <trans_version />
@@ -427,210 +427,59 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2017/09/28 09:38:26.672</created_date>
+    <created_date>2017/10/05 16:30:00.639</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2017/09/28 09:38:26.672</modified_date>
+    <modified_date>2017/10/05 16:30:00.639</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
   </notepads>
-  <connection>
-    <name>localhost1</name>
-    <server>localhost</server>
-    <type>POSTGRESQL</type>
-    <access>Native</access>
-    <database>arconel</database>
-    <port>5432</port>
-    <username>postgres</username>
-    <password>Encrypted 2be98afc86aa7f2e4cb79a371d087aad6</password>
-    <servername />
-    <data_tablespace />
-    <index_tablespace />
-    <attributes>
-      <attribute>
-        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>IS_CLUSTERED</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>PORT_NUMBER</code>
-        <attribute>5432</attribute>
-      </attribute>
-      <attribute>
-        <code>PRESERVE_RESERVED_WORD_CASE</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>QUOTE_ALL_FIELDS</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>USE_POOLING</code>
-        <attribute>N</attribute>
-      </attribute>
-    </attributes>
-  </connection>
   <order>
     <hop>
       <from>Text file input</from>
+      <to>Select values</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Select values</from>
+      <to>Sort rows</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Sort rows</from>
+      <to>Unique rows</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Unique rows</from>
+      <to>Strings cut</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Strings cut</from>
+      <to>Merge Join</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Text file input 2</from>
+      <to>Merge Join</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Merge Join</from>
       <to>Concat Fields</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Concat Fields</from>
-      <to>Concat Fields 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Insert / Update</from>
-      <to>Dummy (do nothing)</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Insert / Update</from>
-      <to>Text file output 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Concat Fields 2</from>
-      <to>Insert / Update</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Text file output 2</from>
-      <to>Write to log</to>
+      <to>Text file output</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>Concat Fields</name>
-    <type>ConcatFields</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <separator>-</separator>
-    <enclosure />
-    <enclosure_forced>N</enclosure_forced>
-    <enclosure_fix_disabled>N</enclosure_fix_disabled>
-    <header>N</header>
-    <footer>N</footer>
-    <format>DOS</format>
-    <compression>None</compression>
-    <encoding />
-    <endedLine />
-    <fileNameInField>N</fileNameInField>
-    <fileNameField />
-    <create_parent_folder>Y</create_parent_folder>
-    <file>
-      <name>file</name>
-      <is_command>N</is_command>
-      <servlet_output>N</servlet_output>
-      <do_not_open_new_file_init>N</do_not_open_new_file_init>
-      <extention>txt</extention>
-      <append>N</append>
-      <split>N</split>
-      <haspartno>N</haspartno>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <SpecifyFormat>N</SpecifyFormat>
-      <date_time_format />
-      <add_to_result_filenames>Y</add_to_result_filenames>
-      <pad>N</pad>
-      <fast_dump>N</fast_dump>
-      <splitevery>0</splitevery>
-    </file>
-    <fields>
-      <field>
-        <name>"IdEmpresa"</name>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>"IdProvincia"</name>
-        <type>None</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>"IdCanton"</name>
-        <type>None</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>"IdParroquia"</name>
-        <type>None</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-    </fields>
-    <ConcatFields>
-      <targetFieldName>key</targetFieldName>
-      <targetFieldLength>0</targetFieldLength>
-      <removeSelectedFields>N</removeSelectedFields>
-    </ConcatFields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>217</xloc>
-      <yloc>79</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Concat Fields 2</name>
-    <type>ConcatFields</type>
+    <name>Select values</name>
+    <type>SelectValues</type>
     <description />
     <distribute>Y</distribute>
     <custom_distribution />
@@ -639,68 +488,357 @@
       <method>none</method>
       <schema_name />
     </partitioning>
-    <separator>-</separator>
-    <enclosure />
-    <enclosure_forced>N</enclosure_forced>
-    <enclosure_fix_disabled>N</enclosure_fix_disabled>
-    <header>N</header>
-    <footer>N</footer>
-    <format>DOS</format>
-    <compression>None</compression>
-    <encoding />
-    <endedLine />
-    <fileNameInField>N</fileNameInField>
-    <fileNameField />
-    <create_parent_folder>Y</create_parent_folder>
-    <file>
-      <name>file</name>
-      <is_command>N</is_command>
-      <servlet_output>N</servlet_output>
-      <do_not_open_new_file_init>N</do_not_open_new_file_init>
-      <extention>txt</extention>
-      <append>N</append>
-      <split>N</split>
-      <haspartno>N</haspartno>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <SpecifyFormat>N</SpecifyFormat>
-      <date_time_format />
-      <add_to_result_filenames>Y</add_to_result_filenames>
-      <pad>N</pad>
-      <fast_dump>N</fast_dump>
-      <splitevery>0</splitevery>
-    </file>
     <fields>
       <field>
+        <name>"IdProcesoRecoleccion"</name>
+        <rename />
+      </field>
+      <field>
         <name>"IdEmpresa"</name>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
+        <rename />
+      </field>
+      <field>
+        <name>"Empresa"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"FechaInformacion"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"IdMes"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"Mes"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"Cuenta"</name>
+        <rename />
       </field>
       <field>
         <name>"Medidor"</name>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
+        <rename />
       </field>
+      <field>
+        <name>"IdProvincia"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"Provincia"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"IdCanton"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"Canton"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"IdParroquia"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"Parroquia"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"NombreAbonado"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"UbicacionAbonado"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"FechaNacimientoAbonado"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"EsTerceraEdad"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"CedulaAbonado"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"NivelVoltaje"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"GrupoConsumo"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"CodGrupoConsumo"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"Tarifa"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"Desc_Tarifa"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"TipoCliente"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"Energia"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"SubsidioCruzadoCalculado"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"SubsidioSolidarioCalculado"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"SubsidioSolidarioAplicado"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"SubsidioTerceraEdad"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"SubsidioTarifaDignidad"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"Energia0722"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"Energia2207"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"Energia0818LV"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"Energia1822LV"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"Energia2208LV"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"Energia1822SDF"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"DemandaMaxima"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"DemandaHorasPico"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"DemandaFacturable"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"EnergiaReactiva"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"ValorComercializacion"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"ImpuestoAlumbradoPublico"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"ImpuestoRecoleccionBasura"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"ImpuestoBomberos"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"FacturaServicioElectrico"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"FacturaElectrica"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"FacturaTotal"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"ValorRefacturacion"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"EnergiaRefacturacion"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"InteresMoraRefacturacion"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"MesesAdeudados"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"RecaudacionServicioElectrico"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"RecaudacionTotal"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"SistemaValorEnergia"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"SistemaValorComercializacion"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"SistemaFacturacionServicioElectrico"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"SistemaRecibeSubsidioCruzado"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"SistemaAplicaSubsidioTerceraEdad"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"SistemaAplicaSubsidioTarifaDignidad"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"SistemaSubsidioTerceraEdad"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"SistemaSubsidioCruzadoNominal"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"SistemaSubsidioCruzado"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"SistemaSubsidioCruzadoSaldo"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"SistemaTotalFacturaSinTarifaDignidad"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"SistemaTotalFacturaConTarifaDignidad"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"SistemaSubsidioTarifaDignidad"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"SistemaTotalFactura"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"Cliente"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"TipoMedidor"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"Transformador"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"SubsidioLeyDiscapacitado"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"LineaBase"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"KwhSubsidio"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"Equipamiento"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"ValorSubsidiadoPec"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"ConsumoResidencial"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"FechaIngresoSisComercial"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"EnergiaElectrica"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"FactorCorreccion"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"CargoDemanda"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"PenalizacionBajoFactorPotencia"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"FactorPotencia"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"FinanciamientoCocinaInduccion"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"InstalacionCircuitoExpreso"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"SubsidioTarifaElectrica"</name>
+        <rename />
+      </field>
+      <field>
+        <name>"FacturadoDamnificadoVolcanTungurahua"</name>
+        <rename />
+      </field>
+      <select_unspecified>N</select_unspecified>
     </fields>
-    <ConcatFields>
-      <targetFieldName>key_abonado</targetFieldName>
-      <targetFieldLength>0</targetFieldLength>
-      <removeSelectedFields>N</removeSelectedFields>
-    </ConcatFields>
     <cluster_schema />
     <remotesteps>
       <input>
@@ -709,426 +847,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>382</xloc>
-      <yloc>81</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Dummy (do nothing)</name>
-    <type>Dummy</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>921</xloc>
-      <yloc>81</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Insert / Update</name>
-    <type>InsertUpdate</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>localhost1</connection>
-    <commit>100</commit>
-    <update_bypassed>N</update_bypassed>
-    <lookup>
-      <schema />
-      <table>consumo</table>
-      <key>
-        <name>key_abonado</name>
-        <field>id_abonado</field>
-        <condition>=</condition>
-        <name2 />
-      </key>
-      <key>
-        <name>"FechaInformacion"</name>
-        <field>id_fecha</field>
-        <condition>=</condition>
-        <name2 />
-      </key>
-      <key>
-        <name>key</name>
-        <field>id_empresa_consumo</field>
-        <condition>=</condition>
-        <name2 />
-      </key>
-      <value>
-        <name>nivelvoltaje</name>
-        <rename>"NivelVoltaje"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>grupoconsumo</name>
-        <rename>"GrupoConsumo"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>codgrupoconsumo</name>
-        <rename>"CodGrupoConsumo"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>tarifa</name>
-        <rename>"Tarifa"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>desc_tarifa</name>
-        <rename>"Desc_Tarifa"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>energia</name>
-        <rename>"Energia"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>subsidiocruzadocalculado</name>
-        <rename>"SubsidioCruzadoCalculado"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>subsidiosolidariocalculado</name>
-        <rename>"SubsidioSolidarioCalculado"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>subsidiosolidarioaplicado</name>
-        <rename>"SubsidioSolidarioAplicado"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>subsidioterceraedad</name>
-        <rename>"SubsidioTerceraEdad"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>subsidiotarifadignidad</name>
-        <rename>"SubsidioTarifaDignidad"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>energia0722</name>
-        <rename>"Energia0722"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>energia2207</name>
-        <rename>"Energia2207"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>energia0818lv</name>
-        <rename>"Energia0818LV"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>energia1822lv</name>
-        <rename>"Energia1822LV"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>energia2208lv</name>
-        <rename>"Energia2208LV"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>energia1822sdf</name>
-        <rename>"Energia1822SDF"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>demandamaxima</name>
-        <rename>"DemandaMaxima"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>demandahoraspico</name>
-        <rename>"DemandaHorasPico"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>demandafacturable</name>
-        <rename>"DemandaFacturable"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>energiareactiva</name>
-        <rename>"EnergiaReactiva"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>valorcomercializacion</name>
-        <rename>"ValorComercializacion"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>impuestoalumbradopublico</name>
-        <rename>"ImpuestoAlumbradoPublico"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>impuestorecoleccionbasura</name>
-        <rename>"ImpuestoRecoleccionBasura"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>impuestobomberos</name>
-        <rename>"ImpuestoBomberos"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>facturaservicioelectrico</name>
-        <rename>"FacturaServicioElectrico"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>facturaelectrica</name>
-        <rename>"FacturaElectrica"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>facturatotal</name>
-        <rename>"FacturaTotal"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>valorrefacturacion</name>
-        <rename>"ValorRefacturacion"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>energiarefacturacion</name>
-        <rename>"EnergiaRefacturacion"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>interesmorarefacturacion</name>
-        <rename>"InteresMoraRefacturacion"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>mesesadeudados</name>
-        <rename>"MesesAdeudados"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>recaudacionservicioelectrico</name>
-        <rename>"RecaudacionServicioElectrico"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>recaudaciontotal</name>
-        <rename>"RecaudacionTotal"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>sistemavalorenergia</name>
-        <rename>"SistemaValorEnergia"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>sistemavalorcomercializacion</name>
-        <rename>"SistemaValorComercializacion"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>sistemafacturacionservicioelectrico</name>
-        <rename>"SistemaFacturacionServicioElectrico"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>sistemarecibesubsidiocruzado</name>
-        <rename>"SistemaRecibeSubsidioCruzado"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>sistemaaplicasubsidioterceraedad</name>
-        <rename>"SistemaAplicaSubsidioTerceraEdad"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>sistemaaplicasubsidiotarifadignidad</name>
-        <rename>"SistemaAplicaSubsidioTarifaDignidad"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>sistemasubsidioterceraedad</name>
-        <rename>"SistemaSubsidioTerceraEdad"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>sistemasubsidiocruzadonominal</name>
-        <rename>"SistemaSubsidioCruzadoNominal"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>sistemasubsidiocruzado</name>
-        <rename>"SistemaSubsidioCruzado"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>sistemasubsidiocruzadosaldo</name>
-        <rename>"SistemaSubsidioCruzadoSaldo"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>sistematotalfacturasintarifadignidad</name>
-        <rename>"SistemaTotalFacturaSinTarifaDignidad"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>sistematotalfacturacontarifadignidad</name>
-        <rename>"SistemaTotalFacturaConTarifaDignidad"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>sistemasubsidiotarifadignidad</name>
-        <rename>"SistemaSubsidioTarifaDignidad"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>sistematotalfactura</name>
-        <rename>"SistemaTotalFactura"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>tipomedidor</name>
-        <rename>"TipoMedidor"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>transformador</name>
-        <rename>"Transformador"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>subsidioleydiscapacitado</name>
-        <rename>"SubsidioLeyDiscapacitado"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>lineabase</name>
-        <rename>"LineaBase"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>kwhsubsidio</name>
-        <rename>"KwhSubsidio"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>equipamiento</name>
-        <rename>"Equipamiento"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>valorsubsidiadopec</name>
-        <rename>"ValorSubsidiadoPec"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>consumoresidencial</name>
-        <rename>"ConsumoResidencial"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>fechaingresosiscomercial</name>
-        <rename>"FechaIngresoSisComercial"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>energiaelectrica</name>
-        <rename>"EnergiaElectrica"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>factorcorreccion</name>
-        <rename>"FactorCorreccion"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>cargodemanda</name>
-        <rename>"CargoDemanda"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>penalizacionbajofactorpotencia</name>
-        <rename>"PenalizacionBajoFactorPotencia"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>factorpotencia</name>
-        <rename>"FactorPotencia"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>financiamientococinainduccion</name>
-        <rename>"FinanciamientoCocinaInduccion"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>instalacioncircuitoexpreso</name>
-        <rename>"InstalacionCircuitoExpreso"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>subsidiotarifaelectrica</name>
-        <rename>"SubsidioTarifaElectrica"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>facturadodamnificadovolcantungurahua</name>
-        <rename>"FacturadoDamnificadoVolcanTungurahua"</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>id_abonado</name>
-        <rename>key_abonado</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>id_fecha</name>
-        <rename>"FechaInformacion"</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>id_empresa_consumo</name>
-        <rename>key</rename>
-        <update>N</update>
-      </value>
-    </lookup>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>716</xloc>
-      <yloc>80</yloc>
+      <xloc>299</xloc>
+      <yloc>135</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1304,8 +1024,8 @@
       </field>
       <field>
         <name>"IdProvincia"</name>
-        <type>Integer</type>
-        <format>#</format>
+        <type>String</type>
+        <format />
         <currency>$</currency>
         <decimal>.</decimal>
         <group>,</group>
@@ -1334,8 +1054,8 @@
       </field>
       <field>
         <name>"IdCanton"</name>
-        <type>Integer</type>
-        <format>#</format>
+        <type>String</type>
+        <format />
         <currency>$</currency>
         <decimal>.</decimal>
         <group>,</group>
@@ -1364,8 +1084,8 @@
       </field>
       <field>
         <name>"IdParroquia"</name>
-        <type>Integer</type>
-        <format>#</format>
+        <type>String</type>
+        <format />
         <currency>$</currency>
         <decimal>.</decimal>
         <group>,</group>
@@ -2521,13 +2241,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>54</xloc>
-      <yloc>77</yloc>
+      <xloc>180</xloc>
+      <yloc>134</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Text file output 2</name>
+    <name>Text file output</name>
     <type>TextFileOutput</type>
     <description />
     <distribute>Y</distribute>
@@ -2549,14 +2269,14 @@
     <endedLine />
     <fileNameInField>N</fileNameInField>
     <fileNameField />
-    <create_parent_folder>N</create_parent_folder>
+    <create_parent_folder>Y</create_parent_folder>
     <file>
-      <name>${path}/consumoInsertar</name>
+      <name>/home/manuel/aINER/AECIG/Info. GIS y Manu/medidores</name>
       <is_command>N</is_command>
       <servlet_output>N</servlet_output>
-      <do_not_open_new_file_init>Y</do_not_open_new_file_init>
-      <extention>txt</extention>
-      <append>Y</append>
+      <do_not_open_new_file_init>N</do_not_open_new_file_init>
+      <extention>csv</extention>
+      <append>N</append>
       <split>N</split>
       <haspartno>N</haspartno>
       <add_date>N</add_date>
@@ -2569,6 +2289,18 @@
       <splitevery>0</splitevery>
     </file>
     <fields>
+      <field>
+        <name>CodigoFinal</name>
+        <type>None</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif />
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
       <field>
         <name>"IdProcesoRecoleccion"</name>
         <type>Integer</type>
@@ -2667,15 +2399,15 @@
       </field>
       <field>
         <name>"IdProvincia"</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
         <nullif />
         <trim_type>none</trim_type>
         <length>15</length>
-        <precision>0</precision>
+        <precision>-1</precision>
       </field>
       <field>
         <name>"Provincia"</name>
@@ -2691,15 +2423,15 @@
       </field>
       <field>
         <name>"IdCanton"</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
         <nullif />
         <trim_type>none</trim_type>
         <length>15</length>
-        <precision>0</precision>
+        <precision>-1</precision>
       </field>
       <field>
         <name>"Canton"</name>
@@ -2715,15 +2447,15 @@
       </field>
       <field>
         <name>"IdParroquia"</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
         <nullif />
         <trim_type>none</trim_type>
         <length>15</length>
-        <precision>0</precision>
+        <precision>-1</precision>
       </field>
       <field>
         <name>"Parroquia"</name>
@@ -3015,15 +2747,15 @@
       </field>
       <field>
         <name>"DemandaMaxima"</name>
-        <type>Number</type>
-        <format>#.#</format>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
         <nullif />
         <trim_type>none</trim_type>
         <length>6</length>
-        <precision>3</precision>
+        <precision>-1</precision>
       </field>
       <field>
         <name>"DemandaHorasPico"</name>
@@ -3614,7 +3346,7 @@
         <precision>-1</precision>
       </field>
       <field>
-        <name>key</name>
+        <name>medidorC</name>
         <type>String</type>
         <format />
         <currency />
@@ -3622,11 +3354,23 @@
         <group />
         <nullif />
         <trim_type>none</trim_type>
-        <length>0</length>
+        <length>100</length>
         <precision>-1</precision>
       </field>
       <field>
-        <name>key_abonado</name>
+        <name>IdEmpresa</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <nullif />
+        <trim_type>none</trim_type>
+        <length>15</length>
+        <precision>0</precision>
+      </field>
+      <field>
+        <name>Empresa</name>
         <type>String</type>
         <format />
         <currency />
@@ -3634,7 +3378,139 @@
         <group />
         <nullif />
         <trim_type>none</trim_type>
-        <length>0</length>
+        <length>11</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Cuenta</name>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif />
+        <trim_type>none</trim_type>
+        <length>15</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Medidor</name>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif />
+        <trim_type>none</trim_type>
+        <length>15</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>IdProvincia</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <nullif />
+        <trim_type>none</trim_type>
+        <length>15</length>
+        <precision>0</precision>
+      </field>
+      <field>
+        <name>Provincia</name>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif />
+        <trim_type>none</trim_type>
+        <length>6</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>IdCanton</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <nullif />
+        <trim_type>none</trim_type>
+        <length>15</length>
+        <precision>0</precision>
+      </field>
+      <field>
+        <name>Canton</name>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif />
+        <trim_type>none</trim_type>
+        <length>7</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>IdParroquia</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <nullif />
+        <trim_type>none</trim_type>
+        <length>15</length>
+        <precision>0</precision>
+      </field>
+      <field>
+        <name>Parroquia</name>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif />
+        <trim_type>none</trim_type>
+        <length>14</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>NombreAbonado</name>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif />
+        <trim_type>none</trim_type>
+        <length>35</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>TIPO</name>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif />
+        <trim_type>none</trim_type>
+        <length>4</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>UbicacionAbonado</name>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif />
+        <trim_type>none</trim_type>
+        <length>50</length>
         <precision>-1</precision>
       </field>
     </fields>
@@ -3646,14 +3522,14 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>725</xloc>
-      <yloc>345</yloc>
+      <xloc>1027</xloc>
+      <yloc>119</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Write to log</name>
-    <type>WriteToLog</type>
+    <name>Unique rows</name>
+    <type>Unique</type>
     <description />
     <distribute>Y</distribute>
     <custom_distribution />
@@ -3662,278 +3538,26 @@
       <method>none</method>
       <schema_name />
     </partitioning>
-    <loglevel>log_level_basic</loglevel>
-    <displayHeader>Y</displayHeader>
-    <limitRows>N</limitRows>
-    <limitRowsNumber>0</limitRowsNumber>
-    <logmessage>Error insertando en consumo</logmessage>
+    <count_rows>N</count_rows>
+    <count_field />
+    <reject_duplicate_row>N</reject_duplicate_row>
+    <error_description />
     <fields>
       <field>
-        <name>"IdProcesoRecoleccion"</name>
-      </field>
-      <field>
         <name>"IdEmpresa"</name>
+        <case_insensitive>N</case_insensitive>
       </field>
       <field>
         <name>"Empresa"</name>
-      </field>
-      <field>
-        <name>"FechaInformacion"</name>
-      </field>
-      <field>
-        <name>"IdMes"</name>
-      </field>
-      <field>
-        <name>"Mes"</name>
-      </field>
-      <field>
-        <name>"Cuenta"</name>
+        <case_insensitive>N</case_insensitive>
       </field>
       <field>
         <name>"Medidor"</name>
-      </field>
-      <field>
-        <name>"IdProvincia"</name>
-      </field>
-      <field>
-        <name>"Provincia"</name>
-      </field>
-      <field>
-        <name>"IdCanton"</name>
-      </field>
-      <field>
-        <name>"Canton"</name>
-      </field>
-      <field>
-        <name>"IdParroquia"</name>
-      </field>
-      <field>
-        <name>"Parroquia"</name>
+        <case_insensitive>N</case_insensitive>
       </field>
       <field>
         <name>"NombreAbonado"</name>
-      </field>
-      <field>
-        <name>"UbicacionAbonado"</name>
-      </field>
-      <field>
-        <name>"FechaNacimientoAbonado"</name>
-      </field>
-      <field>
-        <name>"EsTerceraEdad"</name>
-      </field>
-      <field>
-        <name>"CedulaAbonado"</name>
-      </field>
-      <field>
-        <name>"NivelVoltaje"</name>
-      </field>
-      <field>
-        <name>"GrupoConsumo"</name>
-      </field>
-      <field>
-        <name>"CodGrupoConsumo"</name>
-      </field>
-      <field>
-        <name>"Tarifa"</name>
-      </field>
-      <field>
-        <name>"Desc_Tarifa"</name>
-      </field>
-      <field>
-        <name>"TipoCliente"</name>
-      </field>
-      <field>
-        <name>"Energia"</name>
-      </field>
-      <field>
-        <name>"SubsidioCruzadoCalculado"</name>
-      </field>
-      <field>
-        <name>"SubsidioSolidarioCalculado"</name>
-      </field>
-      <field>
-        <name>"SubsidioSolidarioAplicado"</name>
-      </field>
-      <field>
-        <name>"SubsidioTerceraEdad"</name>
-      </field>
-      <field>
-        <name>"SubsidioTarifaDignidad"</name>
-      </field>
-      <field>
-        <name>"Energia0722"</name>
-      </field>
-      <field>
-        <name>"Energia2207"</name>
-      </field>
-      <field>
-        <name>"Energia0818LV"</name>
-      </field>
-      <field>
-        <name>"Energia1822LV"</name>
-      </field>
-      <field>
-        <name>"Energia2208LV"</name>
-      </field>
-      <field>
-        <name>"Energia1822SDF"</name>
-      </field>
-      <field>
-        <name>"DemandaMaxima"</name>
-      </field>
-      <field>
-        <name>"DemandaHorasPico"</name>
-      </field>
-      <field>
-        <name>"DemandaFacturable"</name>
-      </field>
-      <field>
-        <name>"EnergiaReactiva"</name>
-      </field>
-      <field>
-        <name>"ValorComercializacion"</name>
-      </field>
-      <field>
-        <name>"ImpuestoAlumbradoPublico"</name>
-      </field>
-      <field>
-        <name>"ImpuestoRecoleccionBasura"</name>
-      </field>
-      <field>
-        <name>"ImpuestoBomberos"</name>
-      </field>
-      <field>
-        <name>"FacturaServicioElectrico"</name>
-      </field>
-      <field>
-        <name>"FacturaElectrica"</name>
-      </field>
-      <field>
-        <name>"FacturaTotal"</name>
-      </field>
-      <field>
-        <name>"ValorRefacturacion"</name>
-      </field>
-      <field>
-        <name>"EnergiaRefacturacion"</name>
-      </field>
-      <field>
-        <name>"InteresMoraRefacturacion"</name>
-      </field>
-      <field>
-        <name>"MesesAdeudados"</name>
-      </field>
-      <field>
-        <name>"RecaudacionServicioElectrico"</name>
-      </field>
-      <field>
-        <name>"RecaudacionTotal"</name>
-      </field>
-      <field>
-        <name>"SistemaValorEnergia"</name>
-      </field>
-      <field>
-        <name>"SistemaValorComercializacion"</name>
-      </field>
-      <field>
-        <name>"SistemaFacturacionServicioElectrico"</name>
-      </field>
-      <field>
-        <name>"SistemaRecibeSubsidioCruzado"</name>
-      </field>
-      <field>
-        <name>"SistemaAplicaSubsidioTerceraEdad"</name>
-      </field>
-      <field>
-        <name>"SistemaAplicaSubsidioTarifaDignidad"</name>
-      </field>
-      <field>
-        <name>"SistemaSubsidioTerceraEdad"</name>
-      </field>
-      <field>
-        <name>"SistemaSubsidioCruzadoNominal"</name>
-      </field>
-      <field>
-        <name>"SistemaSubsidioCruzado"</name>
-      </field>
-      <field>
-        <name>"SistemaSubsidioCruzadoSaldo"</name>
-      </field>
-      <field>
-        <name>"SistemaTotalFacturaSinTarifaDignidad"</name>
-      </field>
-      <field>
-        <name>"SistemaTotalFacturaConTarifaDignidad"</name>
-      </field>
-      <field>
-        <name>"SistemaSubsidioTarifaDignidad"</name>
-      </field>
-      <field>
-        <name>"SistemaTotalFactura"</name>
-      </field>
-      <field>
-        <name>"Cliente"</name>
-      </field>
-      <field>
-        <name>"TipoMedidor"</name>
-      </field>
-      <field>
-        <name>"Transformador"</name>
-      </field>
-      <field>
-        <name>"SubsidioLeyDiscapacitado"</name>
-      </field>
-      <field>
-        <name>"LineaBase"</name>
-      </field>
-      <field>
-        <name>"KwhSubsidio"</name>
-      </field>
-      <field>
-        <name>"Equipamiento"</name>
-      </field>
-      <field>
-        <name>"ValorSubsidiadoPec"</name>
-      </field>
-      <field>
-        <name>"ConsumoResidencial"</name>
-      </field>
-      <field>
-        <name>"FechaIngresoSisComercial"</name>
-      </field>
-      <field>
-        <name>"EnergiaElectrica"</name>
-      </field>
-      <field>
-        <name>"FactorCorreccion"</name>
-      </field>
-      <field>
-        <name>"CargoDemanda"</name>
-      </field>
-      <field>
-        <name>"PenalizacionBajoFactorPotencia"</name>
-      </field>
-      <field>
-        <name>"FactorPotencia"</name>
-      </field>
-      <field>
-        <name>"FinanciamientoCocinaInduccion"</name>
-      </field>
-      <field>
-        <name>"InstalacionCircuitoExpreso"</name>
-      </field>
-      <field>
-        <name>"SubsidioTarifaElectrica"</name>
-      </field>
-      <field>
-        <name>"FacturadoDamnificadoVolcanTungurahua"</name>
-      </field>
-      <field>
-        <name>key</name>
-      </field>
-      <field>
-        <name>key_abonado</name>
+        <case_insensitive>N</case_insensitive>
       </field>
     </fields>
     <cluster_schema />
@@ -3944,24 +3568,526 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>469</xloc>
-      <yloc>378</yloc>
+      <xloc>554</xloc>
+      <yloc>134</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Sort rows</name>
+    <type>SortRows</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory />
+    <compress>N</compress>
+    <compress_variable />
+    <unique_rows>N</unique_rows>
+    <fields>
+      <field>
+        <name>"Medidor"</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>435</xloc>
+      <yloc>133</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Concat Fields</name>
+    <type>ConcatFields</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <separator>-</separator>
+    <enclosure>"</enclosure>
+    <enclosure_forced>N</enclosure_forced>
+    <enclosure_fix_disabled>N</enclosure_fix_disabled>
+    <header>N</header>
+    <footer>N</footer>
+    <format>DOS</format>
+    <compression>None</compression>
+    <encoding />
+    <endedLine />
+    <fileNameInField>N</fileNameInField>
+    <fileNameField />
+    <create_parent_folder>Y</create_parent_folder>
+    <file>
+      <name>file</name>
+      <is_command>N</is_command>
+      <servlet_output>N</servlet_output>
+      <do_not_open_new_file_init>N</do_not_open_new_file_init>
+      <extention>txt</extention>
+      <append>N</append>
+      <split>N</split>
+      <haspartno>N</haspartno>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <SpecifyFormat>N</SpecifyFormat>
+      <date_time_format />
+      <add_to_result_filenames>Y</add_to_result_filenames>
+      <pad>N</pad>
+      <fast_dump>N</fast_dump>
+      <splitevery>0</splitevery>
+    </file>
+    <fields>
+      <field>
+        <name>"IdProvincia"</name>
+        <type>None</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif />
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>"IdCanton"</name>
+        <type>None</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif />
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>"IdParroquia"</name>
+        <type>None</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif />
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>TIPO</name>
+        <type>None</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif />
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>medidorC</name>
+        <type>None</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif />
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+    </fields>
+    <ConcatFields>
+      <targetFieldName>CodigoFinal</targetFieldName>
+      <targetFieldLength>0</targetFieldLength>
+      <removeSelectedFields>N</removeSelectedFields>
+    </ConcatFields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>879</xloc>
+      <yloc>125</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Strings cut</name>
+    <type>StringCut</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <in_stream_name>"Medidor"</in_stream_name>
+        <out_stream_name>medidorC</out_stream_name>
+        <cut_from />
+        <cut_to>-4</cut_to>
+      </field>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>682</xloc>
+      <yloc>137</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Text file input 2</name>
+    <type>TextFileInput</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <accept_filenames>N</accept_filenames>
+    <passing_through_fields>N</passing_through_fields>
+    <accept_field />
+    <accept_stepname />
+    <separator>;</separator>
+    <enclosure>"</enclosure>
+    <enclosure_breaks>N</enclosure_breaks>
+    <escapechar />
+    <header>Y</header>
+    <nr_headerlines>1</nr_headerlines>
+    <footer>N</footer>
+    <nr_footerlines>1</nr_footerlines>
+    <line_wrapped>N</line_wrapped>
+    <nr_wraps>1</nr_wraps>
+    <layout_paged>N</layout_paged>
+    <nr_lines_per_page>80</nr_lines_per_page>
+    <nr_lines_doc_header>0</nr_lines_doc_header>
+    <noempty>Y</noempty>
+    <include>N</include>
+    <include_field />
+    <rownum>N</rownum>
+    <rownumByFile>N</rownumByFile>
+    <rownum_field />
+    <format>mixed</format>
+    <encoding />
+    <length>Characters</length>
+    <add_to_result_filenames>Y</add_to_result_filenames>
+    <file>
+      <name>/home/manuel/aINER/AECIG/Info. GIS y Manu/CNEL ELORO.csv</name>
+      <filemask />
+      <exclude_filemask />
+      <file_required>N</file_required>
+      <include_subfolders>N</include_subfolders>
+      <type>CSV</type>
+      <compression>None</compression>
+    </file>
+    <filters>
+    </filters>
+    <fields>
+      <field>
+        <name>IdEmpresa</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <nullif>-</nullif>
+        <ifnull />
+        <position>-1</position>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>Empresa</name>
+        <type>String</type>
+        <format />
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <nullif>-</nullif>
+        <ifnull />
+        <position>-1</position>
+        <length>11</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>Cuenta</name>
+        <type>String</type>
+        <format />
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <nullif>-</nullif>
+        <ifnull />
+        <position>-1</position>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>Medidor</name>
+        <type>String</type>
+        <format />
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <nullif>-</nullif>
+        <ifnull />
+        <position>-1</position>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>IdProvincia</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <nullif>-</nullif>
+        <ifnull />
+        <position>-1</position>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>Provincia</name>
+        <type>String</type>
+        <format />
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <nullif>-</nullif>
+        <ifnull />
+        <position>-1</position>
+        <length>6</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>IdCanton</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <nullif>-</nullif>
+        <ifnull />
+        <position>-1</position>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>Canton</name>
+        <type>String</type>
+        <format />
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <nullif>-</nullif>
+        <ifnull />
+        <position>-1</position>
+        <length>7</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>IdParroquia</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <nullif>-</nullif>
+        <ifnull />
+        <position>-1</position>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>Parroquia</name>
+        <type>String</type>
+        <format />
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <nullif>-</nullif>
+        <ifnull />
+        <position>-1</position>
+        <length>14</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>NombreAbonado</name>
+        <type>String</type>
+        <format />
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <nullif>-</nullif>
+        <ifnull />
+        <position>-1</position>
+        <length>35</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>TIPO</name>
+        <type>String</type>
+        <format />
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <nullif>-</nullif>
+        <ifnull />
+        <position>-1</position>
+        <length>4</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>UbicacionAbonado</name>
+        <type>String</type>
+        <format />
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <nullif>-</nullif>
+        <ifnull />
+        <position>-1</position>
+        <length>50</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+    </fields>
+    <limit>0</limit>
+    <error_ignored>N</error_ignored>
+    <skip_bad_files>N</skip_bad_files>
+    <file_error_field />
+    <file_error_message_field />
+    <error_line_skipped>N</error_line_skipped>
+    <error_count_field />
+    <error_fields_field />
+    <error_text_field />
+    <bad_line_files_destination_directory />
+    <bad_line_files_extension>warning</bad_line_files_extension>
+    <error_line_files_destination_directory />
+    <error_line_files_extension>error</error_line_files_extension>
+    <line_number_files_destination_directory />
+    <line_number_files_extension>line</line_number_files_extension>
+    <date_format_lenient>Y</date_format_lenient>
+    <date_format_locale>en_US</date_format_locale>
+    <shortFileFieldName />
+    <pathFieldName />
+    <hiddenFieldName />
+    <lastModificationTimeFieldName />
+    <uriNameFieldName />
+    <rootUriNameFieldName />
+    <extensionFieldName />
+    <sizeFieldName />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>321</xloc>
+      <yloc>31</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Merge Join</name>
+    <type>MergeJoin</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <join_type>LEFT OUTER</join_type>
+    <step1>Strings cut</step1>
+    <step2>Text file input 2</step2>
+    <keys_1>
+      <key>"IdEmpresa"</key>
+      <key>"Medidor"</key>
+    </keys_1>
+    <keys_2>
+      <key>IdEmpresa</key>
+      <key>Medidor</key>
+    </keys_2>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>774</xloc>
+      <yloc>51</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step_error_handling>
-    <error>
-      <source_step>Insert / Update</source_step>
-      <target_step>Text file output 2</target_step>
-      <is_enabled>Y</is_enabled>
-      <nr_valuename />
-      <descriptions_valuename />
-      <fields_valuename />
-      <codes_valuename />
-      <max_errors />
-      <max_pct_errors />
-      <min_pct_rows />
-    </error>
   </step_error_handling>
   <slave-step-copy-partition-distribution>
   </slave-step-copy-partition-distribution>

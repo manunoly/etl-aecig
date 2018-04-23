@@ -303,8 +303,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>83</xloc>
-      <yloc>86</yloc>
+      <xloc>81</xloc>
+      <yloc>82</yloc>
     </entry>
     <entry>
       <name>read-file-names</name>
